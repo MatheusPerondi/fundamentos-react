@@ -1,7 +1,63 @@
-export default function Login(){
+import { Button, Link as ChakraLink, Field, Flex, Heading, HStack, Image, Input, Stack, Text, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { Checkbox } from "@/components/ui/checkbox";
+import { PasswordInput } from "@/components/ui/password-input";
+import loginImage from "../../public/assets/8da4f1d7ff459ac79a3bbd831ac3e846f325d9e7.gif";
+
+export default function Login() {
+
     return (
-        <div>
-           Login 
-        </div>
+        <Flex w="100vw" h="100vh">
+            <Flex w="50%" bg="#2C73EB" justifyContent="center" alignItems="center">
+                <Image w={500} h={500} src={loginImage.src} />
+            </Flex>
+            <VStack w="50%" justify="center">
+                <Stack>
+                    <Heading as="h1" color="black" fontSize="3xl" fontWeight="bold" > Login </Heading>
+
+                    <Text color="gray.500" fontWeight="normal" fontSize="lg"> Se você já é membro pode fazer login com seu endereço de email </Text>
+
+                    <VStack align="flex-start" gap={6} mt={10}>
+
+                        <Field.Root>
+                            <Field.Label color="gray.500" fontSize="md">
+                                Email
+                            </Field.Label>
+
+                            <Input h="15" borderRadius="md" colorPalette="blue" color="gray.500" />
+                        </Field.Root>
+
+                        <Field.Root color="gray.500" fontSize="md">
+                            <Field.Label>
+                                Senha
+                            </Field.Label>
+
+                            <PasswordInput type="password" h="15" borderRadius="md" colorPalette="blue" color="gray.500" />
+                        </Field.Root>
+
+
+                        <Checkbox colorPalette="blue" color="gray.500">
+                            Lembrar
+                        </Checkbox>
+
+                        <Button w="full" h="16" borderRadius="md" colorPalette="blue" fontSize="md" fontWeight="medium">
+                            Entrar
+                        </Button>
+                    </VStack>
+
+
+                    <HStack justify="center" mt={10}>
+                        <Text color="gray.500" fontSize="md" fontWeight="medium">
+                            Não possui uma conta, clique aqui
+                        </Text>
+                        <ChakraLink asChild color="blue.500" fontWeight="bold">
+                            <NextLink href="/sign-in"> sign-up </NextLink>
+                        </ChakraLink>
+                    </HStack>
+
+                </Stack>
+
+            </VStack>
+        </Flex>
     )
 }
