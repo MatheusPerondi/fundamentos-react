@@ -1,6 +1,8 @@
 import { Button, Link as ChakraLink, Field, Flex, Heading, HStack, Image, Input, Stack, Text, VStack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { resolve } from "path";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -15,29 +17,35 @@ const signInFormSchema = z.object({
 });
 
 
+
 type SignInFormData = z.infer<typeof signInFormSchema>;
 
 export default function Login() {
 
-    const {user, updateUser} = useSession();
+    const { user, singIn } = useSession();
+
+    const router = useRouter();
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(signInFormSchema),
     });
 
-    function handleSigIn(data: SignInFormData) {
-        console.log(data);
-        updateUser({ id: "teste",
-            email: data.email,
-            cpf: "10138020982",
-            fullName: "matheus",
-            avatartUrl: "teste"
+    async function handleSigIn({ email, password }: SignInFormData) {
+        const promise = new Promise<void>(async (resolve, reject) => {
+            try {
+                await singIn({ email, password });
+                resolve();
+                router.push("/")
+            } catch (error) {
+                console.log(error);
+                reject();
+            }
         })
     }
 
     useEffect(() => {
         console.log("User: ", user)
-    },[user])
+    }, [user])
 
     return (
         <Flex w="100vw" h="100vh">
